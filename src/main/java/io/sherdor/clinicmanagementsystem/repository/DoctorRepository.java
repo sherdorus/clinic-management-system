@@ -4,5 +4,9 @@ import io.sherdor.clinicmanagementsystem.model.Doctor;
 import io.sherdor.clinicmanagementsystem.model.Visit;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DoctorRepository extends JpaRepository<Doctor, Visit> {
+import java.util.List;
+
+public interface DoctorRepository extends JpaRepository<Doctor, Long> {
+    List<Doctor> findByLastNameContainingIgnoreCase(String lastName);
+    List<Doctor> findBySpecialtyId(Long specialtyId);
 }

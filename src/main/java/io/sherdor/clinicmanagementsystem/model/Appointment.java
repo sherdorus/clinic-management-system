@@ -1,9 +1,16 @@
 package io.sherdor.clinicmanagementsystem.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.Builder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,30 +21,42 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class Appointment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "doctor_id", nullable = false)
-    private Doctor doctor;
-
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
-    @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
-    private Visit visit;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id", nullable = false)
+    @NotNull(message = "Doctor is required")
+    private Doctor doctor;
 
-    @NotNull(message = "Start date/time must be specified")
-    LocalDateTime startDateTime;
+    @Column(nullable = false)
+    @NotNull(message = "Start time is required")
+    @Future(message = "Appointment time must be in the future")
+    private LocalDateTime startDateTime;
 
-    @NotNull(message = "End date/time must be specified")
-    LocalDateTime endDateTime;
+    @Column(nullable = false)
+    @NotNull(message = "End time is required")
+    private LocalDateTime endDateTime;
+
+    @Column(length = 500)
+    @NotBlank(message = "Reason for appointment is required")
+    private String reason;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
-    private AppointmentStatus appointmentStatus;
+    private AppointmentStatus status = AppointmentStatus.PENDING;
 
-    private String reason;
+    @Column(length = 1000)
+    private String notes;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }
