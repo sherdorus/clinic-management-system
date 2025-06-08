@@ -1,14 +1,12 @@
 package io.sherdor.clinicmanagementsystem.model;
 
-public enum AppointmentStatus {
-    PENDING("Pending"),
-    CONFIRMED("Confirmed"),
-    COMPLETED("Completed"),
-    CANCELLED("Cancelled");
+public enum Gender {
+    MALE("Male"),
+    FEMALE("Female");
 
     private final String displayName;
 
-    AppointmentStatus(String displayName) {
+    Gender(String displayName) {
         this.displayName = displayName;
     }
 

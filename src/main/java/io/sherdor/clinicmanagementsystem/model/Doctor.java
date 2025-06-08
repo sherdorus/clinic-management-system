@@ -4,7 +4,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.Builder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,28 +26,31 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Doctor's first name must not be empty")
+    @Column(nullable = false)
+    @NotBlank(message = "First name is required")
     private String firstName;
 
-    @NotBlank(message = "Doctor's last name must not be empty")
+    @Column(nullable = false)
+    @NotBlank(message = "Last name is required")
     private String lastName;
 
+    @Column(unique = true)
     @Email(message = "Invalid email format")
     private String email;
 
-    @Pattern(regexp = "\\+?[0-9\\-\\s]{7,15}", message = "Invalid phone number")
+    @Pattern(regexp = "\\+?[1-9\\-\\s]{7,15}", message = "Invalid phone number format")
     private String phone;
 
     private String officeRoom;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "specialty_id", nullable = false)
     private Specialty specialty;
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     private List<Appointment> appointments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     private List<Visit> visits = new ArrayList<>();
 
     public String getFullName(){

@@ -1,8 +1,13 @@
 package io.sherdor.clinicmanagementsystem.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.Builder;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -17,29 +22,38 @@ public class Visit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id", nullable = false)
+    @NotNull(message = "Patient is required")
     private Patient patient;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id", nullable = false)
+    @NotNull(message = "Doctor is required")
     private Doctor doctor;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;
 
+    @Column(nullable = false)
+    @NotNull(message = "Visit time is required")
     private LocalDateTime visitDateTime;
 
-    @NotBlank(message = "Patient symptoms must be described")
-    @Column(columnDefinition = "TEXT")
-    private String symptoms;
+    @Column(length = 1000)
+    private String complaints;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(length = 2000)
     private String diagnosis;
 
-    @Column(columnDefinition = "TEXT")
-    private String notes;
+    @Column(length = 2000)
+    private String treatment;
+
+    @Column(length = 1000)
+    private String recommendations;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 }

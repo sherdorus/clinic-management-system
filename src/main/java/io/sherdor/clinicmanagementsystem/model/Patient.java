@@ -1,12 +1,14 @@
 package io.sherdor.clinicmanagementsystem.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import lombok.*;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.Builder;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,45 +22,48 @@ import java.util.List;
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    @NotBlank(message = "Patient's first name must not be empty")
+    @Column(nullable = false)
+    @NotBlank(message = "First name is required")
     private String firstName;
 
-    @NotBlank(message = "Patient's last name must not be empty")
+    @Column(nullable = false)
+    @NotBlank(message = "Last name is required")
     private String lastName;
+
+    @Column(nullable = false)
+    @NotNull(message = "Date of birth is required")
+    @Past(message = "Date of birth must be in the past")
+    private LocalDate dateOfBirth;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Gender is required")
+    private Gender gender;
+
+    @Pattern(regexp = "\\+?[1-9\\-\\s]{7,15}", message = "Invalid phone number format")
+    private String phone;
 
     @Email(message = "Invalid email format")
     private String email;
 
-    @Pattern(regexp = "\\+?[0-9\\-\\s]{7,15}", message = "Invalid phone number")
-    private String phone;
-
-    private String dateOfBirth;
-
-    private String gender;
-
+    @Column(length = 1000)
     private String address;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "primary_doctor_id")
     private Doctor primaryDoctor;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<MedicalRecord> medicalRecords = new ArrayList<>();
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<Appointment> appointments = new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Appointment> appointments = new ArrayList<>();
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<Visit> visits = new ArrayList<>();
 
-    public String getFullName(){
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<MedicalRecord> medicalRecords = new ArrayList<>();
+
+    public String getFullName() {
         return firstName + " " + lastName;
     }
-
-    @Override
-    public String toString() {
-        return firstName + " " + lastName;
-    }
-
 }

@@ -1,8 +1,13 @@
 package io.sherdor.clinicmanagementsystem.model;
 
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.Builder;
 
 @Entity
 @Table(name = "specialties")
@@ -17,9 +22,12 @@ public class Specialty {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Specialty name must not be empty")
-    @Column(unique = true)
+    @NotBlank(message = "Specialty name is required")
+    @Column(unique = true, nullable = false)
     private String name;
+
+    @Column(length = 500)
+    private String description;
 
     @Override
     public String toString() {
