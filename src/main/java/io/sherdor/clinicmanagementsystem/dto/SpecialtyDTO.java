@@ -19,7 +19,7 @@ public class SpecialtyDTO {
 
     private String description;
 
-    private static SpecialtyDTO fromEntity(Specialty specialty) {
+    public static SpecialtyDTO fromEntity(Specialty specialty) {
         return new SpecialtyDTO(
                 specialty.getId(),
                 specialty.getName(),
@@ -27,14 +27,14 @@ public class SpecialtyDTO {
         );
     }
 
-    private Specialty toEntity() {
+    public Specialty toEntity() {
         return Specialty.builder()
                 .name(name)
                 .description(description)
                 .build();
     }
 
-    private void updateEntity(Specialty specialty) {
+    public void updateEntity(Specialty specialty) {
         specialty.setName(name);
         specialty.setDescription(description);
     }
