@@ -29,7 +29,7 @@ public class MedicalRecordDTO {
 
     private LocalDateTime createdAt;
 
-    private static MedicalRecordDTO fromEntity(MedicalRecord record) {
+    public static MedicalRecordDTO fromEntity(MedicalRecord record) {
         return new MedicalRecordDTO(
                 record.getId(),
                 record.getPatient() != null ? record.getPatient().getId() : null,

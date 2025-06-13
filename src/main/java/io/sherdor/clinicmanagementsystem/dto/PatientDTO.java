@@ -39,7 +39,7 @@ public class PatientDTO {
     private String address;
     private Long primaryDoctorId;
 
-    private static PatientDTO fromEntity(Patient patient) {
+    public static PatientDTO fromEntity(Patient patient) {
         return new PatientDTO(
                 patient.getId(),
                 patient.getFirstName(),
@@ -53,7 +53,7 @@ public class PatientDTO {
         );
     }
 
-    private Patient toEntity(Doctor doctor) {
+    public Patient toEntity(Doctor doctor) {
         return Patient.builder()
                 .firstName(firstName)
                 .lastName(lastName)

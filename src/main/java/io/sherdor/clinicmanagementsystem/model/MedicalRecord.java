@@ -32,7 +32,7 @@ public class MedicalRecord {
     private Patient patient;
 
     @Column(nullable = false)
-    @NotBlank(message = "Record type is required")
+    @NotNull(message = "Record type is required")
     private RecordType recordType;
 
     @Column(nullable = false)
