@@ -8,6 +8,7 @@ A comprehensive REST API for clinic management built with Spring Boot. This back
 
 This backend API is designed for healthcare applications, offering RESTful endpoints to support complete clinic operations. It's ideal for integration with web applications, mobile apps, or other healthcare systems.
 This project is ideal for showcasing backend development skills as part of a junior or mid-level Java developer portfolio.
+
 ---
 
 ## ✨ Features
