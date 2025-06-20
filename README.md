@@ -103,7 +103,8 @@ This will populate your database with sample doctors, patients, specialties, app
 ```
 src/main/java/io/sherdor/clinicmanagementsystem/
 ├── controller/         # REST controllers
-├── model/              # Entity classes
+├── enums/              # Enums classes
+├── entity/             # Entity classes
 ├── dto/                # Data transfer objects
 ├── repository/         # JPA repositories
 ├── service/            # Business logic
