@@ -1,7 +1,7 @@
 package io.sherdor.clinicmanagementsystem.controller;
 
 import io.sherdor.clinicmanagementsystem.dto.PatientDTO;
-import io.sherdor.clinicmanagementsystem.model.Patient;
+import io.sherdor.clinicmanagementsystem.entity.Patient;
 import io.sherdor.clinicmanagementsystem.service.DoctorService;
 import io.sherdor.clinicmanagementsystem.service.PatientService;
 import jakarta.validation.Valid;

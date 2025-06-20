@@ -1,9 +1,9 @@
 package io.sherdor.clinicmanagementsystem.dto;
 
-import io.sherdor.clinicmanagementsystem.model.Doctor;
-import io.sherdor.clinicmanagementsystem.model.MedicalRecord;
-import io.sherdor.clinicmanagementsystem.model.Patient;
-import io.sherdor.clinicmanagementsystem.model.RecordType;
+import io.sherdor.clinicmanagementsystem.entity.Doctor;
+import io.sherdor.clinicmanagementsystem.entity.MedicalRecord;
+import io.sherdor.clinicmanagementsystem.entity.Patient;
+import io.sherdor.clinicmanagementsystem.enums.RecordType;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;

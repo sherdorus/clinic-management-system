@@ -1,10 +1,10 @@
 package io.sherdor.clinicmanagementsystem.dto;
 
 
-import io.sherdor.clinicmanagementsystem.model.Appointment;
-import io.sherdor.clinicmanagementsystem.model.Doctor;
-import io.sherdor.clinicmanagementsystem.model.Patient;
-import io.sherdor.clinicmanagementsystem.model.Visit;
+import io.sherdor.clinicmanagementsystem.entity.Appointment;
+import io.sherdor.clinicmanagementsystem.entity.Doctor;
+import io.sherdor.clinicmanagementsystem.entity.Patient;
+import io.sherdor.clinicmanagementsystem.entity.Visit;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package io.sherdor.clinicmanagementsystem.service;
 
-import io.sherdor.clinicmanagementsystem.model.Doctor;
+import io.sherdor.clinicmanagementsystem.entity.Doctor;
 import io.sherdor.clinicmanagementsystem.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

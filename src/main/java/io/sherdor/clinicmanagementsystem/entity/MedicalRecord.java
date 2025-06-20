@@ -1,5 +1,6 @@
-package io.sherdor.clinicmanagementsystem.model;
+package io.sherdor.clinicmanagementsystem.entity;
 
+import io.sherdor.clinicmanagementsystem.enums.RecordType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

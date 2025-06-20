@@ -1,7 +1,7 @@
 package io.sherdor.clinicmanagementsystem.service;
 
-import io.sherdor.clinicmanagementsystem.model.Appointment;
-import io.sherdor.clinicmanagementsystem.model.AppointmentStatus;
+import io.sherdor.clinicmanagementsystem.entity.Appointment;
+import io.sherdor.clinicmanagementsystem.enums.AppointmentStatus;
 import io.sherdor.clinicmanagementsystem.repository.AppointmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

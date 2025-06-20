@@ -1,6 +1,6 @@
 package io.sherdor.clinicmanagementsystem.dto;
 
-import io.sherdor.clinicmanagementsystem.model.Doctor;
+import io.sherdor.clinicmanagementsystem.entity.Doctor;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

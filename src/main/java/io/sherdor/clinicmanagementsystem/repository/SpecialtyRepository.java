@@ -1,6 +1,6 @@
 package io.sherdor.clinicmanagementsystem.repository;
 
-import io.sherdor.clinicmanagementsystem.model.Specialty;
+import io.sherdor.clinicmanagementsystem.entity.Specialty;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

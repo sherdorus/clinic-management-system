@@ -1,7 +1,7 @@
 package io.sherdor.clinicmanagementsystem.repository;
 
-import io.sherdor.clinicmanagementsystem.model.Appointment;
-import io.sherdor.clinicmanagementsystem.model.AppointmentStatus;
+import io.sherdor.clinicmanagementsystem.entity.Appointment;
+import io.sherdor.clinicmanagementsystem.enums.AppointmentStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;

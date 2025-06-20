@@ -1,6 +1,7 @@
 package io.sherdor.clinicmanagementsystem.dto;
 
-import io.sherdor.clinicmanagementsystem.model.*;
+import io.sherdor.clinicmanagementsystem.enums.AppointmentStatus;
+import io.sherdor.clinicmanagementsystem.entity.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 

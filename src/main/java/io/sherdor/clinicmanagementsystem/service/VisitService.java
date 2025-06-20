@@ -1,6 +1,6 @@
 package io.sherdor.clinicmanagementsystem.service;
 
-import io.sherdor.clinicmanagementsystem.model.Visit;
+import io.sherdor.clinicmanagementsystem.entity.Visit;
 import io.sherdor.clinicmanagementsystem.repository.VisitRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

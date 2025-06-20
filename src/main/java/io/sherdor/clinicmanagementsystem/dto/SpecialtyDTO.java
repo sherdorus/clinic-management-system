@@ -1,7 +1,7 @@
 package io.sherdor.clinicmanagementsystem.dto;
 
 
-import io.sherdor.clinicmanagementsystem.model.Specialty;
+import io.sherdor.clinicmanagementsystem.entity.Specialty;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;

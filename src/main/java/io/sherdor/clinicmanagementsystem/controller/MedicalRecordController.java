@@ -1,7 +1,7 @@
 package io.sherdor.clinicmanagementsystem.controller;
 
 import io.sherdor.clinicmanagementsystem.dto.MedicalRecordDTO;
-import io.sherdor.clinicmanagementsystem.model.MedicalRecord;
+import io.sherdor.clinicmanagementsystem.entity.MedicalRecord;
 import io.sherdor.clinicmanagementsystem.service.DoctorService;
 import io.sherdor.clinicmanagementsystem.service.MedicalRecordService;
 import io.sherdor.clinicmanagementsystem.service.PatientService;

@@ -1,7 +1,7 @@
 package io.sherdor.clinicmanagementsystem.controller;
 
 import io.sherdor.clinicmanagementsystem.dto.VisitDTO;
-import io.sherdor.clinicmanagementsystem.model.Visit;
+import io.sherdor.clinicmanagementsystem.entity.Visit;
 import io.sherdor.clinicmanagementsystem.service.AppointmentService;
 import io.sherdor.clinicmanagementsystem.service.DoctorService;
 import io.sherdor.clinicmanagementsystem.service.PatientService;

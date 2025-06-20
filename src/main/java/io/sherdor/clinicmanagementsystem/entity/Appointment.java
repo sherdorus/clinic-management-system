@@ -1,5 +1,6 @@
-package io.sherdor.clinicmanagementsystem.model;
+package io.sherdor.clinicmanagementsystem.entity;
 
+import io.sherdor.clinicmanagementsystem.enums.AppointmentStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;

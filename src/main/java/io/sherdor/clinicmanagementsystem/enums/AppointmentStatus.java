@@ -1,4 +1,4 @@
-package io.sherdor.clinicmanagementsystem.model;
+package io.sherdor.clinicmanagementsystem.enums;
 
 public enum AppointmentStatus {
     PENDING("Pending"),

@@ -1,8 +1,8 @@
 package io.sherdor.clinicmanagementsystem.dto;
 
-import io.sherdor.clinicmanagementsystem.model.Doctor;
-import io.sherdor.clinicmanagementsystem.model.Gender;
-import io.sherdor.clinicmanagementsystem.model.Patient;
+import io.sherdor.clinicmanagementsystem.entity.Doctor;
+import io.sherdor.clinicmanagementsystem.enums.Gender;
+import io.sherdor.clinicmanagementsystem.entity.Patient;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

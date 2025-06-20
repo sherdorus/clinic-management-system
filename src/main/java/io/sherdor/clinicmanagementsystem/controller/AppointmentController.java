@@ -1,7 +1,7 @@
 package io.sherdor.clinicmanagementsystem.controller;
 
 import io.sherdor.clinicmanagementsystem.dto.AppointmentDTO;
-import io.sherdor.clinicmanagementsystem.model.Appointment;
+import io.sherdor.clinicmanagementsystem.entity.Appointment;
 import io.sherdor.clinicmanagementsystem.repository.AppointmentRepository;
 import io.sherdor.clinicmanagementsystem.repository.DoctorRepository;
 import io.sherdor.clinicmanagementsystem.repository.PatientRepository;

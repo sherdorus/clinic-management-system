@@ -1,6 +1,6 @@
 package io.sherdor.clinicmanagementsystem.service;
 
-import io.sherdor.clinicmanagementsystem.model.MedicalRecord;
+import io.sherdor.clinicmanagementsystem.entity.MedicalRecord;
 import io.sherdor.clinicmanagementsystem.repository.MedicalRecordRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

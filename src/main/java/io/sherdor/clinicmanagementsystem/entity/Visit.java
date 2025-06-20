@@ -1,4 +1,4 @@
-package io.sherdor.clinicmanagementsystem.model;
+package io.sherdor.clinicmanagementsystem.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

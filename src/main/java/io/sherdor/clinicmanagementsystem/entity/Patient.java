@@ -1,5 +1,6 @@
-package io.sherdor.clinicmanagementsystem.model;
+package io.sherdor.clinicmanagementsystem.entity;
 
+import io.sherdor.clinicmanagementsystem.enums.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;

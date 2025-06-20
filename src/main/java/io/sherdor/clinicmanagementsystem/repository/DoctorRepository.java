@@ -1,7 +1,6 @@
 package io.sherdor.clinicmanagementsystem.repository;
 
-import io.sherdor.clinicmanagementsystem.model.Doctor;
-import io.sherdor.clinicmanagementsystem.model.Visit;
+import io.sherdor.clinicmanagementsystem.entity.Doctor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
