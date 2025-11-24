@@ -1,10 +1,7 @@
 package io.sherdor.clinicmanagementsystem.controller;
 
 import io.sherdor.clinicmanagementsystem.dto.AppointmentDTO;
-import io.sherdor.clinicmanagementsystem.entity.Appointment;
-import io.sherdor.clinicmanagementsystem.repository.AppointmentRepository;
-import io.sherdor.clinicmanagementsystem.repository.DoctorRepository;
-import io.sherdor.clinicmanagementsystem.repository.PatientRepository;
+import io.sherdor.clinicmanagementsystem.service.AppointmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,50 +15,35 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AppointmentController {
 
-    private final AppointmentRepository repository;
-    private final PatientRepository patientRepository;
-    private final DoctorRepository doctorRepository;
+
+    private final AppointmentService appointmentService;
 
     @GetMapping
     public ResponseEntity<List<AppointmentDTO>> getAllAppointments() {
-        List<Appointment> appointments = repository.findAll();
-        List<AppointmentDTO> appointmentDTOS = appointments
-                .stream()
-                .map(AppointmentDTO::fromEntity)
-                .toList();
-        return ResponseEntity.ok(appointmentDTOS);
+        return ResponseEntity.ok(appointmentService.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AppointmentDTO> getAppointmentById(@PathVariable Long id) {
-        Appointment appointment = repository.findById(id).orElseThrow();
-        return ResponseEntity.ok(AppointmentDTO.fromEntity(appointment));
+        return ResponseEntity.ok(appointmentService.findById(id));
     }
 
     @PostMapping
     public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody AppointmentDTO appointmentDTO) {
-        var patient = patientRepository.findById(appointmentDTO.getPatientId()).orElseThrow();
-        var doctor = doctorRepository.findById(appointmentDTO.getDoctorId()).orElseThrow();
-        Appointment appointment = appointmentDTO.toEntity(patient, doctor);
-        Appointment savedAppointment = repository.save(appointment);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(AppointmentDTO.fromEntity(savedAppointment));
+        AppointmentDTO created = appointmentService.create(appointmentDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<AppointmentDTO> updateAppointment(@PathVariable Long id, @Valid @RequestBody AppointmentDTO appointmentDTO) {
-        var patient = patientRepository.findById(appointmentDTO.getPatientId()).orElseThrow();
-        var doctor = doctorRepository.findById(appointmentDTO.getDoctorId()).orElseThrow();
-        Appointment existingAppointment = repository.findById(id).orElseThrow();
-        appointmentDTO.updateEntity(existingAppointment, patient, doctor);
-        Appointment updatedDoctor = repository.save(existingAppointment);
-        return ResponseEntity.ok(AppointmentDTO.fromEntity(updatedDoctor));
+        var updated = appointmentService.update(id, appointmentDTO);
+        return ResponseEntity.ok(updated);
 
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        repository.deleteById(id);
+        appointmentService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }

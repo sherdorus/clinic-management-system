@@ -1,15 +1,17 @@
 package io.sherdor.clinicmanagementsystem.service;
 
+import io.sherdor.clinicmanagementsystem.dto.AppointmentDTO;
 import io.sherdor.clinicmanagementsystem.entity.Appointment;
-import io.sherdor.clinicmanagementsystem.enums.AppointmentStatus;
+import io.sherdor.clinicmanagementsystem.exception.ResourceNotFoundException;
 import io.sherdor.clinicmanagementsystem.repository.AppointmentRepository;
+import io.sherdor.clinicmanagementsystem.repository.DoctorRepository;
+import io.sherdor.clinicmanagementsystem.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -17,47 +19,52 @@ import java.util.NoSuchElementException;
 public class AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
+    private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
 
-    public List<Appointment> findAll() {
-        return appointmentRepository.findAll();
+    public List<AppointmentDTO> findAll() {
+        return appointmentRepository.findAll()
+                .stream()
+                .map(AppointmentDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 
-    public Appointment findById(Long id) {
-        return appointmentRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Appointment not found with id: " + id));
+    public AppointmentDTO findById(Long id) {
+        var appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Appointment not found with id: " + id));
+        return AppointmentDTO.fromEntity(appointment);
     }
 
-    public Appointment save(Appointment appointment) {
-        return appointmentRepository.save(appointment);
+    public AppointmentDTO create(AppointmentDTO appointmentDTO) {
+        var patient = patientRepository.findById(appointmentDTO.getPatientId())
+                .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + appointmentDTO.getPatientId()));
+        var doctor = doctorRepository.findById(appointmentDTO.getDoctorId())
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with id: " + appointmentDTO.getDoctorId()));
+
+        Appointment appointment = appointmentDTO.toEntity(patient, doctor);
+        Appointment saved = appointmentRepository.save(appointment);
+        return AppointmentDTO.fromEntity(saved);
+    }
+
+    public AppointmentDTO update(Long id, AppointmentDTO appointmentDTO) {
+        var patient = patientRepository.findById(appointmentDTO.getPatientId())
+                .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + appointmentDTO.getPatientId()));
+
+        var doctor = doctorRepository.findById(appointmentDTO.getDoctorId())
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with id: " + appointmentDTO.getDoctorId()));
+
+        var existingAppointment = appointmentRepository.findById(id).orElseThrow();
+        appointmentDTO.updateEntity(existingAppointment, patient, doctor);
+        var updated = appointmentRepository.save(existingAppointment);
+        return AppointmentDTO.fromEntity(updated);
     }
 
     public void deleteById(Long id) {
+        if (!appointmentRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Appointment not found with id: " + id);
+        }
         appointmentRepository.deleteById(id);
     }
 
-    public List<Appointment> findByStatus(AppointmentStatus status) {
-        return appointmentRepository.findByStatus(status);
-    }
-
-    public List<Appointment> findByPatientId(Long patientId) {
-        return appointmentRepository.findByPatientId(patientId);
-    }
-
-    public List<Appointment> findByDoctorAndDateRange(Long doctorId, LocalDateTime start, LocalDateTime end) {
-        return appointmentRepository.findByDoctorIdAndStartDateTimeBetween(doctorId, start, end);
-    }
-
-    public Appointment updateStatus(Long id, AppointmentStatus status) {
-        var appointment = findById(id);
-        appointment.setStatus(status);
-        return save(appointment);
-    }
-
-    public List<Appointment> getRecentAppointments() {
-        return appointmentRepository.findTop5ByOrderByStartDateTimeDesc();
-    }
-
-    public long countByStatus(AppointmentStatus status) {
-        return appointmentRepository.countByStatus(status);
-    }
 }
