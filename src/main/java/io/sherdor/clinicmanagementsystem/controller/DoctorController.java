@@ -23,36 +23,21 @@ public class DoctorController {
 
     @GetMapping
     public ResponseEntity<List<DoctorDTO>> getAllDoctors() {
-        List<Doctor> doctors = doctorService.findAll();
-        List<DoctorDTO> doctorDTOS = doctors.stream()
-                .map(DoctorDTO::fromEntity)
-                .toList();
-        return ResponseEntity.ok(doctorDTOS);
+        return ResponseEntity.ok(doctorService.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DoctorDTO> getDoctorById(@PathVariable Long id) {
-        Doctor doctor = doctorService.findById(id);
-        return ResponseEntity.ok(DoctorDTO.fromEntity(doctor));
+        return ResponseEntity.ok(doctorService.findById(id));
     }
 
     @PostMapping
     public ResponseEntity<DoctorDTO> createDoctor(@Valid @RequestBody DoctorDTO doctorDTO) {
-        Specialty specialty = specialtyService.findById(doctorDTO.getSpecialtyId());
-        Doctor doctor = doctorDTO.toEntity();
-        doctor.setSpecialty(specialty);
-        Doctor savedDoctor = doctorService.save(doctor);
+        var created = doctorService.create(doctorDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(DoctorDTO.fromEntity(savedDoctor));
+                .body(created);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<DoctorDTO> updateDoctor(@PathVariable Long id, @Valid @RequestBody DoctorDTO doctorDTO) {
-        Doctor existingDoctor = doctorService.findById(id);
-        doctorDTO.updateEntity(existingDoctor);
-        Doctor updatedDoctor = doctorService.save(existingDoctor);
-        return ResponseEntity.ok(DoctorDTO.fromEntity(updatedDoctor));
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDoctor(@PathVariable Long id) {
