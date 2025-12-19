@@ -1,8 +1,6 @@
 package io.sherdor.clinicmanagementsystem.service;
 
 import io.sherdor.clinicmanagementsystem.dto.DoctorDTO;
-import io.sherdor.clinicmanagementsystem.entity.Doctor;
-import io.sherdor.clinicmanagementsystem.entity.Specialty;
 import io.sherdor.clinicmanagementsystem.exception.ResourceNotFoundException;
 import io.sherdor.clinicmanagementsystem.repository.DoctorRepository;
 import io.sherdor.clinicmanagementsystem.repository.SpecialtyRepository;
@@ -29,19 +27,19 @@ public class DoctorService {
     }
 
     public DoctorDTO findById(Long id) {
-        Doctor doctor = doctorRepository.findById(id)
+        var doctor = doctorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with id:" + id));
         return DoctorDTO.fromEntity(doctor);
     }
 
     public DoctorDTO create(DoctorDTO doctorDTO) {
-        Specialty specialty = specialtyRepository.findById(doctorDTO.getId())
+        var specialty = specialtyRepository.findById(doctorDTO.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Patient not found with id: " + doctorDTO.getId()
                 ));
-        Doctor doctor = doctorDTO.toEntity();
+        var doctor = doctorDTO.toEntity();
         doctor.setSpecialty(specialty);
-        Doctor savedDoctor = doctorRepository.save(doctor);
+        var savedDoctor = doctorRepository.save(doctor);
         return DoctorDTO.fromEntity(savedDoctor);
     }
 

@@ -1,7 +1,6 @@
 package io.sherdor.clinicmanagementsystem.service;
 
 import io.sherdor.clinicmanagementsystem.dto.AppointmentDTO;
-import io.sherdor.clinicmanagementsystem.entity.Appointment;
 import io.sherdor.clinicmanagementsystem.exception.ResourceNotFoundException;
 import io.sherdor.clinicmanagementsystem.repository.AppointmentRepository;
 import io.sherdor.clinicmanagementsystem.repository.DoctorRepository;
@@ -42,8 +41,8 @@ public class AppointmentService {
         var doctor = doctorRepository.findById(appointmentDTO.getDoctorId())
                 .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with id: " + appointmentDTO.getDoctorId()));
 
-        Appointment appointment = appointmentDTO.toEntity(patient, doctor);
-        Appointment saved = appointmentRepository.save(appointment);
+        var appointment = appointmentDTO.toEntity(patient, doctor);
+        var saved = appointmentRepository.save(appointment);
         return AppointmentDTO.fromEntity(saved);
     }
 
