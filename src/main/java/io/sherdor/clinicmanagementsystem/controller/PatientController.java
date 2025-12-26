@@ -1,8 +1,6 @@
 package io.sherdor.clinicmanagementsystem.controller;
 
 import io.sherdor.clinicmanagementsystem.dto.PatientDTO;
-import io.sherdor.clinicmanagementsystem.entity.Patient;
-import io.sherdor.clinicmanagementsystem.service.DoctorService;
 import io.sherdor.clinicmanagementsystem.service.PatientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +17,6 @@ import java.util.List;
 public class PatientController {
 
     private final PatientService patientService;
-    private final DoctorService doctorService;
 
     @GetMapping
     public ResponseEntity<List<PatientDTO>> getAllPatients() {
