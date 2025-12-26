@@ -23,36 +23,27 @@ public class PatientController {
 
     @GetMapping
     public ResponseEntity<List<PatientDTO>> getAllPatients() {
-        List<Patient> patients = patientService.findAll();
-        List<PatientDTO> patientDTOs = patients.stream()
-                .map(PatientDTO::fromEntity)
-                .toList();
-        return ResponseEntity.ok(patientDTOs);
+
+        return ResponseEntity.ok(patientService.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PatientDTO> getPatientById(@PathVariable Long id) {
-        Patient patient = patientService.findById(id);
-        return ResponseEntity.ok(PatientDTO.fromEntity(patient));
+        return ResponseEntity.ok(patientService.findById(id));
     }
 
     @PostMapping
     public ResponseEntity<PatientDTO> createPatient(@Valid @RequestBody PatientDTO patientDTO) {
-        var doctor = doctorService.findById(patientDTO.getPrimaryDoctorId());
-        Patient patient = patientDTO.toEntity(doctor);
-        Patient savedPatient = patientService.save(patient);
+        var created = patientService.create(patientDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(PatientDTO.fromEntity(savedPatient));
+                .body(created);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PatientDTO> updatePatient(@PathVariable Long id,
                                                     @Valid @RequestBody PatientDTO patientDTO) {
-        Patient existingPatient = patientService.findById(id);
-        var doctor = doctorService.findById(patientDTO.getPrimaryDoctorId());
-        patientDTO.updateEntity(existingPatient, doctor);
-        Patient updatedPatient = patientService.save(existingPatient);
-        return ResponseEntity.ok(PatientDTO.fromEntity(updatedPatient));
+        var updated = patientService.update(id, patientDTO);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
@@ -63,19 +54,11 @@ public class PatientController {
 
     @GetMapping("/search")
     public ResponseEntity<List<PatientDTO>> searchPatientsByLastName(@RequestParam String lastName) {
-        List<Patient> patients = patientService.findByLastName(lastName);
-        List<PatientDTO> patientDTOs = patients.stream()
-                .map(PatientDTO::fromEntity)
-                .toList();
-        return ResponseEntity.ok(patientDTOs);
+        return ResponseEntity.ok(patientService.findByLastName(lastName));
     }
 
     @GetMapping("/by-doctor/{doctorId}")
     public ResponseEntity<List<PatientDTO>> getPatientsByDoctor(@PathVariable Long doctorId) {
-        List<Patient> patients = patientService.findByDoctor(doctorId);
-        List<PatientDTO> patientDTOs = patients.stream()
-                .map(PatientDTO::fromEntity)
-                .toList();
-        return ResponseEntity.ok(patientDTOs);
+        return ResponseEntity.ok(patientService.findByDoctor(doctorId));
     }
 }
