@@ -30,7 +30,7 @@ public class SpecialtyController {
 
     @PostMapping
     public ResponseEntity<SpecialtyDTO> create(@Valid @RequestBody SpecialtyDTO specialtyDTO) {
-        var createdSpecialty = specialtyService.save(specialtyDTO);
+        var createdSpecialty = specialtyService.create(specialtyDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(createdSpecialty);
     }

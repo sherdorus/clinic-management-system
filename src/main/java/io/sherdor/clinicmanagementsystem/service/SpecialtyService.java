@@ -32,7 +32,7 @@ public class SpecialtyService {
         return SpecialtyDTO.fromEntity(specialty);
     }
 
-    public SpecialtyDTO save(SpecialtyDTO specialtyDTO) {
+    public SpecialtyDTO create(SpecialtyDTO specialtyDTO) {
         var specialty = specialtyDTO.toEntity();
         var savedSpecialty = specialtyRepository.save(specialty);
         return SpecialtyDTO.fromEntity(savedSpecialty);
