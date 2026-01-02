@@ -1,7 +1,6 @@
 package io.sherdor.clinicmanagementsystem.controller;
 
 import io.sherdor.clinicmanagementsystem.dto.SpecialtyDTO;
-import io.sherdor.clinicmanagementsystem.entity.Specialty;
 import io.sherdor.clinicmanagementsystem.service.SpecialtyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,33 +20,25 @@ public class SpecialtyController {
 
     @GetMapping
     public ResponseEntity<List<SpecialtyDTO>> getAllSpecialties() {
-        List<Specialty> specialty = specialtyService.findAll();
-        List<SpecialtyDTO> specialtyDTOS = specialty.stream()
-                .map(SpecialtyDTO::fromEntity)
-                .toList();
-        return ResponseEntity.ok(specialtyDTOS);
+        return ResponseEntity.ok(specialtyService.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<SpecialtyDTO> getSpecialtyById(@PathVariable Long id) {
-        var specialty = specialtyService.findById(id);
-        return ResponseEntity.ok(SpecialtyDTO.fromEntity(specialty));
+        return ResponseEntity.ok(specialtyService.findById(id));
     }
 
     @PostMapping
     public ResponseEntity<SpecialtyDTO> create(@Valid @RequestBody SpecialtyDTO specialtyDTO) {
-        var specialty = specialtyDTO.toEntity();
-        var createdSpecialty = specialtyService.save(specialty);
+        var createdSpecialty = specialtyService.save(specialtyDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(SpecialtyDTO.fromEntity(createdSpecialty));
+                .body(createdSpecialty);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<SpecialtyDTO> updateSpecialty(@PathVariable Long id, @Valid @RequestBody SpecialtyDTO specialtyDTO) {
-        var existing = specialtyService.findById(id);
-        specialtyDTO.updateEntity(existing);
-        var updated = specialtyService.save(existing);
-        return ResponseEntity.ok(SpecialtyDTO.fromEntity(updated));
+        var updatedSpecialty = specialtyService.update(id, specialtyDTO);
+        return ResponseEntity.ok(updatedSpecialty);
     }
 
     @DeleteMapping("/{id}")
