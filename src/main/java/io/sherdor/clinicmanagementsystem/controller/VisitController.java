@@ -1,12 +1,10 @@
 package io.sherdor.clinicmanagementsystem.controller;
 
 import io.sherdor.clinicmanagementsystem.dto.VisitDTO;
-import io.sherdor.clinicmanagementsystem.entity.Visit;
-import io.sherdor.clinicmanagementsystem.service.AppointmentService;
-import io.sherdor.clinicmanagementsystem.service.DoctorService;
-import io.sherdor.clinicmanagementsystem.service.PatientService;
 import io.sherdor.clinicmanagementsystem.service.VisitService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,23 +16,27 @@ import java.util.List;
 public class VisitController {
 
     private final VisitService visitService;
-    private final PatientService patientService;
-    private final DoctorService doctorService;
-    private final AppointmentService appointmentService;
 
     @GetMapping
     public ResponseEntity<List<VisitDTO>> getAllVisitors() {
-        List<Visit> visits = visitService.findAll();
-        List<VisitDTO> visitDTOS = visits.stream()
-                .map(VisitDTO::fromEntity)
-                .toList();
-        return ResponseEntity.ok(visitDTOS);
+        return ResponseEntity.ok(visitService.findAll());
     }
 
     @GetMapping({"/{id}"})
     public ResponseEntity<VisitDTO> findById(@PathVariable Long id) {
-        var visit = visitService.findById(id);
-        return ResponseEntity.ok(VisitDTO.fromEntity(visit));
+        return ResponseEntity.ok(visitService.findById(id));
     }
 
+    @PostMapping
+    public ResponseEntity<VisitDTO> createVisit(@Valid @RequestBody VisitDTO visitDTO) {
+        var createdVisit = visitService.create(visitDTO);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(createdVisit);
+    }
+
+    @DeleteMapping({"/{id}"})
+    public ResponseEntity<Void> deleteVisit(@PathVariable Long id) {
+        visitService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
