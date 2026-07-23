@@ -42,14 +42,51 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
+            set -e
+            
             cd /opt/clinic
-
+            
+            echo "Pull latest image..."
             docker compose pull app
+            
+            echo "Start application..."
             docker compose up -d app
-
+            
+            echo "Waiting for application to become healthy..."
+            
+            timeout=180
+            elapsed=0
+            
+            while true; do
+              status=$(docker inspect --format='{{.State.Health.Status}}' clinic-app-1)
+            
+              echo "Current status: $status"
+            
+              if [ "$status" = "healthy" ]; then
+                echo "Application is healthy."
+                break
+              fi
+            
+              if [ "$status" = "unhealthy" ]; then
+                echo "Application became unhealthy."
+                docker compose logs --tail=100 app
+                exit 1
+              fi
+            
+              if [ "$elapsed" -ge "$timeout" ]; then
+                echo "Timed out waiting for healthy status."
+                docker compose logs --tail=100 app
+                exit 1
+              fi
+            
+              sleep 5
+              elapsed=$((elapsed + 5))
+            done
+            
+            echo ""
             echo "Containers:"
             docker compose ps
-
+            
             echo ""
             echo "Application logs:"
             docker compose logs --tail=50 app
