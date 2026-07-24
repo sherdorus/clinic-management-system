@@ -1,170 +1,270 @@
 # Clinic Management System
 
-![Java](https://img.shields.io/badge/Java-17-blue)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen)
-![AWS](https://img.shields.io/badge/Deployed%20on-AWS-orange)
-![Database](https://img.shields.io/badge/Database-MySQL%208-blue)
-![Build](https://img.shields.io/badge/Build-Maven-informational)
+![Java](https://img.shields.io/badge/Java-21-blue)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.0-brightgreen)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED)
+![MySQL](https://img.shields.io/badge/MySQL-8-4479A1)
+![Redis](https://img.shields.io/badge/Redis-DC382D)
+![Prometheus](https://img.shields.io/badge/Monitoring-Prometheus-E6522C)
+![Grafana](https://img.shields.io/badge/Dashboard-Grafana-F46800)
+![Loki](https://img.shields.io/badge/Logging-Loki-2F4050)
 
-A REST API for clinic management built with Spring Boot. This backend service provides endpoints to manage doctors, patients, appointments, and medical records.
+A Spring Boot REST API demonstrating backend development, production-style deployment, monitoring, centralized logging, and DevOps practices.
+
+---
 
 ## Overview
 
-This backend API is designed for healthcare applications, offering RESTful endpoints to support clinic operations. It can be integrated with web or mobile applications.
+Clinic Management System provides REST APIs for managing clinics, doctors, patients, appointments, visits, and medical records.
+
+The project is designed not only as a CRUD application, but also as a demonstration of how a Spring Boot application can be deployed and operated in a production-like environment using containerization, monitoring, centralized logging, and automated deployment.
+
+---
 
 ## Features
 
-### Current Functionality
+### Business Features
 
-* Doctor Management API – CRUD operations for doctors
-* Specialty Management API – Manage medical specialties
-* Patient Management API – Patient registration and profile management
-* Appointment System API – Appointment scheduling and management
-* Visit Management API – Patient visit tracking
-* Medical Records API – Track patient medical history
-* Swagger Documentation – OpenAPI/Swagger UI for testing and documentation
+- Doctor Management
+- Patient Management
+- Specialty Management
+- Appointment Scheduling
+- Visit Management
+- Medical Records
+- Swagger / OpenAPI Documentation
 
-### Planned Enhancements
+### Production-Style Features
 
-* Authentication and Authorization
-* Email notifications for appointment reminders
-* Reporting APIs for analytics
+- Docker Compose Deployment
+- Nginx Reverse Proxy
+- HTTPS (Let's Encrypt)
+- MySQL
+- Redis
+
+- Spring Boot Actuator
+- Micrometer
+- Prometheus Monitoring
+- Grafana Dashboards
+- Loki Log Aggregation
+- Promtail Log Collection
+
+- Automated MySQL Backups
+- Docker Log Rotation
+- GitHub Actions Deployment
+
+> Health and management endpoints (`/actuator/*`) are intentionally kept internal and are not exposed publicly.
+
+---
+
+## Architecture
+
+```text
+                     Internet
+                         │
+                    HTTPS (443)
+                         │
+                      Nginx
+                         │
+               Spring Boot REST API
+                  │              │
+                  │              ├────────► Redis
+                  │
+                  ├──────────────► MySQL
+                  │
+                  ├── Actuator ──► Prometheus ──► Grafana
+                  │
+                  └── application.log
+                           │
+                       Promtail
+                           │
+                         Loki
+                           │
+                        Grafana
+```
+
+---
 
 ## Technology Stack
 
-* Language: Java 17
-* Framework: Spring Boot 3
-* Database: MySQL 8
-* ORM: Spring Data JPA (Hibernate)
-* Documentation: Swagger / OpenAPI 3
-* Build Tool: Maven
-* Utilities: Lombok
+### Backend
 
-## Prerequisites
+- Java 21
+- Spring Boot 3.5.0
+- Spring Data JPA
+- Hibernate
+- Maven
+- Lombok
 
-* Java 17 or higher
-* MySQL 8.0 or higher
-* Maven 3.6 or higher
+### Database
 
-## Live Deployment (AWS)
+- MySQL 8
+- Redis
 
-The project is currently deployed and running in **AWS** with a configured database and full backend infrastructure.
+### Infrastructure
 
-* **Base URL:** [https://clinic-app.ubucloud.sbs](https://clinic-app.ubucloud.sbs)
-* **Environment:** Production (AWS)
-* **Database:** Managed relational database (configured in AWS)
+- Docker
+- Docker Compose
+- Nginx
+- Let's Encrypt SSL
 
-You can use this URL to test the API or connect a frontend application.
+### Monitoring
 
-> Swagger UI availability depends on production configuration. If enabled, it is usually available at:
-> `https://clinic-app.ubucloud.sbs/swagger-ui/index.html`
+- Spring Boot Actuator
+- Micrometer
+- Prometheus
+- Grafana
+
+### Logging
+
+- Loki
+- Promtail
+
+### CI/CD
+
+- GitHub Actions
+
+---
+
+## Live Demo
+
+Live API
+
+**https://clinic.ubucloud.cc**
+
+Swagger UI
+
+**https://clinic.ubucloud.cc/swagger-ui.html**
+
+OpenAPI Specification
+
+**https://clinic.ubucloud.cc/api-docs**
+
+Grafana Dashboard (login required)
+
+**https://grafana.clinic.ubucloud.cc**
+
+---
+
+## Monitoring
+
+The application exposes operational metrics through Spring Boot Actuator.
+
+Collected metrics include:
+
+- JVM Heap Usage
+- JVM Threads
+- CPU Usage
+- HTTP Request Metrics
+- Database Connection Pool
+- Application Health
+
+Metrics are collected by Prometheus and visualized in Grafana.
+
+---
+
+## Centralized Logging
+
+Application logs are written to log files and collected by Promtail.
+
+Logs are stored in Loki and can be searched through Grafana.
 
 ---
 
 ## Quick Start
 
-### 1. Clone the Repository
+### Clone Repository
 
 ```bash
 git clone https://github.com/sherdorus/clinic-management-system.git
+
 cd clinic-management-system
 ```
 
-### 2. Create MySQL Database
+### Create Database
 
 ```sql
-CREATE DATABASE clinic_management;
+CREATE DATABASE clinicdb;
 ```
 
-### 3. Configure Application Properties
+### Configure Database
 
-Update `src/main/resources/application.properties` with database credentials:
+Update:
 
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/clinic_management
-spring.datasource.username=your_username
-spring.datasource.password=your_password
+```text
+src/main/resources/application.yaml
 ```
 
-### 4. Run the Application
+Example:
+
+```yaml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/clinicdb
+    username: your_username
+    password: your_password
+```
+
+### Run Application
 
 ```bash
 mvn spring-boot:run
 ```
 
-### 5. Open Swagger UI
+### Open Swagger UI
 
-Open in browser:
-
-```
-http://localhost:8080/swagger-ui/index.html
+```text
+http://localhost:8080/swagger-ui.html
 ```
 
-Use this interface to explore API endpoints.
+---
 
-### 6. Load Sample Data (Optional)
+## Sample Data
 
-To import sample data:
+Import sample records:
 
 ```bash
-mysql -u your_username -p clinic_management < src/main/resources/db/clinic_test_data.sql
+mysql -u your_username -p clinicdb < src/main/resources/db/clinic_test_data.sql
 ```
 
-This command populates the database with sample doctors, patients, specialties, appointments, and visits.
+---
 
 ## Project Structure
 
+```text
+src
+├── main
+│   ├── java
+│   │   └── io
+│   │       └── sherdor
+│   │           └── clinicmanagementsystem
+│   │               ├── config
+│   │               ├── controller
+│   │               ├── dto
+│   │               ├── entity
+│   │               ├── enums
+│   │               ├── repository
+│   │               ├── service
+│   │               └── ClinicManagementApplication.java
+│   │
+│   └── resources
+│       ├── db
+│       └── application.yaml
 ```
-src/main/java/io/sherdor/clinicmanagementsystem/
-├── controller/
-├── enums/
-├── entity/
-├── dto/
-├── repository/
-├── service/
-├── config/
-└── ClinicManagementApplication.java
 
-src/main/resources/
-├── db/
-│   └── clinic_test_data.sql
-└── application.properties
-```
-
-## Development Notes
-
-### Lombok
-
-This project uses Lombok to reduce boilerplate code. Ensure your IDE has Lombok support enabled.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch:
-
-   ```bash
-   git checkout -b feature/your-feature
-   ```
-3. Commit your changes:
-
-   ```bash
-   git commit -m "Add your feature"
-   ```
-4. Push and open a Pull Request
+---
 
 ## Roadmap
 
-* Authentication & Authorization
-* Email notification system
-* Audit logging
-* Advanced search and filtering
-* File upload support
-* Integration testing
+- JWT Authentication
+- Role-Based Authorization
+- Email Notifications
+- Audit Logging
+- File Uploads
+- Integration Tests
+- Testcontainers
+- Kubernetes Deployment
 
-## Contact
-
-Maintainer: sherdorus
-For questions or issues, open an issue on the GitHub repository.
+---
 
 ## License
 
