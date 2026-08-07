@@ -50,4 +50,11 @@ public class DoctorService {
         }
         doctorRepository.deleteById(id);
     }
+
+    public List<DoctorDTO> findByLastName(String lastName){
+        return doctorRepository.findByLastNameContainingIgnoreCase(lastName)
+                .stream()
+                .map(DoctorDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
 }
