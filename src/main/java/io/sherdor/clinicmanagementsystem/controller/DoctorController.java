@@ -45,7 +45,7 @@ public class DoctorController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("{search")
+    @GetMapping("/search")
     public ResponseEntity<List<DoctorDTO>> getDoctorByLastName(@RequestParam String lastName){
         return ResponseEntity.ok(doctorService.findByLastName(lastName));
     }
