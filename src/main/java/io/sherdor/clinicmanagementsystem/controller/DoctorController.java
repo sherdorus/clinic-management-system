@@ -1,10 +1,7 @@
 package io.sherdor.clinicmanagementsystem.controller;
 
 import io.sherdor.clinicmanagementsystem.dto.DoctorDTO;
-import io.sherdor.clinicmanagementsystem.entity.Doctor;
-import io.sherdor.clinicmanagementsystem.entity.Specialty;
 import io.sherdor.clinicmanagementsystem.service.DoctorService;
-import io.sherdor.clinicmanagementsystem.service.SpecialtyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +16,6 @@ import java.util.List;
 public class DoctorController {
 
     private final DoctorService doctorService;
-    private final SpecialtyService specialtyService;
 
     @GetMapping
     public ResponseEntity<List<DoctorDTO>> getAllDoctors() {
@@ -46,7 +42,12 @@ public class DoctorController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<DoctorDTO>> getDoctorByLastName(@RequestParam String lastName){
+    public ResponseEntity<List<DoctorDTO>> getDoctorsByLastName(@RequestParam String lastName){
         return ResponseEntity.ok(doctorService.findByLastName(lastName));
+    }
+
+    @GetMapping("/specialty/{specialtyId}")
+    public ResponseEntity<List<DoctorDTO>> getDoctorsBySpecialty (@PathVariable Long specialtyId){
+        return ResponseEntity.ok(doctorService.findBySpecialtyId(specialtyId));
     }
 }

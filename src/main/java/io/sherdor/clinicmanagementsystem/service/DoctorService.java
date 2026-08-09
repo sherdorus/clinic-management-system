@@ -52,9 +52,25 @@ public class DoctorService {
     }
 
     public List<DoctorDTO> findByLastName(String lastName){
-        return doctorRepository.findByLastNameContainingIgnoreCase(lastName)
+        var doctors = doctorRepository.findByLastNameContainingIgnoreCase(lastName);
+        if (doctors.isEmpty()){
+            throw new ResourceNotFoundException("No doctors found with last name containing: " + lastName);
+        }
+
+        return doctors
                 .stream()
                 .map(DoctorDTO::fromEntity)
-                .collect(Collectors.toList());
+                .toList();
+    }
+
+    public List<DoctorDTO> findBySpecialtyId(Long id){
+        var specialty = doctorRepository.findBySpecialtyId(id);
+        if (specialty.isEmpty()){
+            throw new ResourceNotFoundException("No doctors found with specialty id: " + id);
+        }
+        return specialty
+                .stream()
+                .map(DoctorDTO::fromEntity)
+                .toList();
     }
 }
