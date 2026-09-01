@@ -46,4 +46,9 @@ public class AppointmentController {
         appointmentService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/doctor/{doctorid}")
+    public ResponseEntity<List<AppointmentDTO>> getAppointmentsByDoctor (@PathVariable Long doctorid){
+        return ResponseEntity.ok(appointmentService.findByDoctorId(doctorid));
+    }
 }

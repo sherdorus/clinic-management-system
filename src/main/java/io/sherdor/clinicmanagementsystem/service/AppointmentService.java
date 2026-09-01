@@ -66,4 +66,15 @@ public class AppointmentService {
         appointmentRepository.deleteById(id);
     }
 
+    public List<AppointmentDTO> findByDoctorId(Long doctorId){
+        var appointments = appointmentRepository.findByDoctorId(doctorId);
+        if (appointments.isEmpty()){
+            throw new ResourceNotFoundException("No doctors found with specialty id: " + doctorId);
+        }
+        return appointments
+                .stream()
+                .map(AppointmentDTO::fromEntity)
+                .toList();
+    }
+
 }
