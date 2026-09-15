@@ -43,7 +43,7 @@ public class VisitService {
         var patient = patientRepository.findById(visitDTO.getPatientId())
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id:" + visitDTO.getPatientId()));
         var appointment = appointmentRepository.findById(visitDTO.getAppointmentId())
-                .orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id:" + visitDTO.getPatientId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id:" + visitDTO.getAppointmentId()));
         var visit = visitDTO.toEntity(patient, doctor, appointment);
         var savedVisit = visitRepository.save(visit);
         return VisitDTO.fromEntity(savedVisit);

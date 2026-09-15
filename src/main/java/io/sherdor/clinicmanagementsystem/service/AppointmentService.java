@@ -53,8 +53,9 @@ public class AppointmentService {
         var doctor = doctorRepository.findById(appointmentDTO.getDoctorId())
                 .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with id: " + appointmentDTO.getDoctorId()));
 
-        var existingAppointment = appointmentRepository.findById(id).orElseThrow();
-        appointmentDTO.updateEntity(existingAppointment, patient, doctor);
+        var existingAppointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Appointment not found with id: " + id));        appointmentDTO.updateEntity(existingAppointment, patient, doctor);
         var updated = appointmentRepository.save(existingAppointment);
         return AppointmentDTO.fromEntity(updated);
     }

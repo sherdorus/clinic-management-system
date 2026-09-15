@@ -35,7 +35,7 @@ public class DoctorService {
     public DoctorDTO create(DoctorDTO doctorDTO) {
         var specialty = specialtyRepository.findById(doctorDTO.getSpecialtyId())
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "Specialty not found with id: " + doctorDTO.getId()
+                        "Specialty not found with id: " + doctorDTO.getSpecialtyId()
                 ));
         var doctor = doctorDTO.toEntity();
         doctor.setSpecialty(specialty);
