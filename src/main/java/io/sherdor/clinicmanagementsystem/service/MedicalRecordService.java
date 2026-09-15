@@ -32,7 +32,7 @@ public class MedicalRecordService {
 
     public MedicalRecordDTO findById(Long id) {
         var record = medicalRecordRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Record not found with id:" + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Record not found with id:" + id));
         return MedicalRecordDTO.fromEntity(record);
     }
 

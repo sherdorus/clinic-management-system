@@ -28,7 +28,7 @@ public class SpecialtyService {
 
     public SpecialtyDTO findById(Long id) {
         var specialty = specialtyRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Specialty not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Specialty not found with id: " + id));
         return SpecialtyDTO.fromEntity(specialty);
     }
 
@@ -40,7 +40,7 @@ public class SpecialtyService {
 
     public SpecialtyDTO update(Long id, SpecialtyDTO specialtyDTO) {
         var specialty = specialtyRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Specialty not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Specialty not found with id: " + id));
         specialtyDTO.updateEntity(specialty);
         var updatedSpecialty = specialtyRepository.save(specialty);
         return SpecialtyDTO.fromEntity(updatedSpecialty);

@@ -33,7 +33,7 @@ public class VisitService {
 
     public VisitDTO findById(Long id) {
         var visit = visitRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Visit not found with id:" + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Visit not found with id:" + id));
         return VisitDTO.fromEntity(visit);
     }
 

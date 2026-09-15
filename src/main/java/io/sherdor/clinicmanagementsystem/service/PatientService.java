@@ -30,7 +30,7 @@ public class PatientService {
 
     public PatientDTO findById(Long id) {
         var patient = patientRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Patient not found with id:" + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Patient not found with id:" + id));
         return PatientDTO.fromEntity(patient);
     }
 
