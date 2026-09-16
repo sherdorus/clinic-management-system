@@ -5,6 +5,7 @@ import io.sherdor.clinicmanagementsystem.entity.Appointment;
 import io.sherdor.clinicmanagementsystem.entity.Doctor;
 import io.sherdor.clinicmanagementsystem.entity.Patient;
 import io.sherdor.clinicmanagementsystem.entity.Visit;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,14 +22,14 @@ public class VisitDTO {
     private Long doctorId;
     private Long appointmentId;
     private LocalDateTime visitDateTime;
-    @NotNull
+    @NotBlank
     private String complaints;
-    @NotNull
+    @NotBlank
     private String diagnosis;
-    @NotNull
+    @NotBlank
     private String treatment;
     private String recommendations;
-    @NotNull
+    @NotBlank
     private LocalDateTime createdAt;
 
     public static VisitDTO fromEntity(Visit visit) {

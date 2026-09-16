@@ -23,11 +23,11 @@ public class PatientDTO {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
-    @NotNull(message = "Date of birth is required")
+    @NotBlank(message = "Date of birth is required")
     @Past(message = "Date of birth must be in the past")
     private LocalDate dateOfBirth;
 
-    @NotNull(message = "Gender is required")
+    @NotBlank(message = "Gender is required")
     private Gender gender;
 
     @Pattern(regexp = "\\+?[1-9\\-\\s]{7,15}", message = "Invalid phone number format")

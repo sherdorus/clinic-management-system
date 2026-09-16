@@ -1,6 +1,7 @@
 package io.sherdor.clinicmanagementsystem.dto;
 
 import io.sherdor.clinicmanagementsystem.entity.Doctor;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -20,7 +21,7 @@ public class DoctorDTO {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
-    @NotNull(message = "Invalid email format")
+    @Email(message = "Invalid email format")
     private String email;
 
     @Pattern(regexp = "\\+?[1-9\\-\\s]{7,15}", message = "Invalid phone number format")
