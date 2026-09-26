@@ -18,9 +18,13 @@ import java.time.LocalDateTime;
 public class VisitDTO {
 
     private Long id;
+    @NotNull
     private Long patientId;
+    @NotNull
     private Long doctorId;
+    @NotNull
     private Long appointmentId;
+    @NotNull
     private LocalDateTime visitDateTime;
     @NotBlank
     private String complaints;
@@ -29,7 +33,7 @@ public class VisitDTO {
     @NotBlank
     private String treatment;
     private String recommendations;
-    @NotBlank
+
     private LocalDateTime createdAt;
 
     public static VisitDTO fromEntity(Visit visit) {
@@ -56,7 +60,6 @@ public class VisitDTO {
                 .diagnosis(diagnosis)
                 .treatment(treatment)
                 .recommendations(recommendations)
-                .createdAt(LocalDateTime.now())
                 .build();
     }
 

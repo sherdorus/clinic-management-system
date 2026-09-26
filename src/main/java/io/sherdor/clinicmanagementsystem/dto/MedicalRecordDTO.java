@@ -48,7 +48,6 @@ public class MedicalRecordDTO {
                 .recordDate(recordDate)
                 .content(content)
                 .doctor(doctor)
-                .createdAt(createdAt)
                 .build();
     }
 
@@ -58,7 +57,6 @@ public class MedicalRecordDTO {
         record.setRecordDate(recordDate);
         record.setContent(content);
         record.setDoctor(doctor);
-        record.setCreatedAt(createdAt);
     }
 
 }
