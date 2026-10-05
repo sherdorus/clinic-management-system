@@ -55,13 +55,13 @@ public class Patient {
     @JoinColumn(name = "primary_doctor_id")
     private Doctor primaryDoctor;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "patient")
     private List<Appointment> appointments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "patient")
     private List<Visit> visits = new ArrayList<>();
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "patient")
     private List<MedicalRecord> medicalRecords = new ArrayList<>();
 
     public String getFullName() {

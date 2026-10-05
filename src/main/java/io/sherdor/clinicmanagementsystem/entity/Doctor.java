@@ -47,10 +47,10 @@ public class Doctor {
     @JoinColumn(name = "specialty_id", nullable = false)
     private Specialty specialty;
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "doctor")
     private List<Appointment> appointments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "doctor")
     private List<Visit> visits = new ArrayList<>();
 
     public String getFullName(){

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/visits")
+@RequestMapping("/api/visits")
 @RequiredArgsConstructor
 public class VisitController {
 
@@ -22,7 +22,7 @@ public class VisitController {
         return ResponseEntity.ok(visitService.findAll());
     }
 
-    @GetMapping({"/{id}"})
+    @GetMapping("/{id}")
     public ResponseEntity<VisitDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(visitService.findById(id));
     }
@@ -34,7 +34,7 @@ public class VisitController {
                 .body(createdVisit);
     }
 
-    @DeleteMapping({"/{id}"})
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteVisit(@PathVariable Long id) {
         visitService.deleteById(id);
         return ResponseEntity.noContent().build();
