@@ -46,6 +46,7 @@ public class Patient {
     private String phone;
 
     @Email(message = "Invalid email format")
+    @Column(unique = true)
     private String email;
 
     @Column(length = 1000)
