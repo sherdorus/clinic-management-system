@@ -17,12 +17,16 @@ public class AppUserPrincipal implements UserDetails {
     private final Role role;
     private final Long patientId;
     private final Long doctorId;
+    private final boolean enabled;
+    private final boolean accountNonLocked;
 
     public AppUserPrincipal(AppUser appUser) {
         this.id = appUser.getId();
         this.email = appUser.getEmail();
         this.passwordHash = appUser.getPasswordHash();
         this.role = appUser.getRole();
+        this.enabled = appUser.isEnabled();
+        this.accountNonLocked = appUser.isAccountNonLocked();
 
         this.patientId = appUser.getPatient() != null
                 ? appUser.getPatient().getId()
@@ -31,6 +35,22 @@ public class AppUserPrincipal implements UserDetails {
         this.doctorId = appUser.getDoctor() != null
                 ? appUser.getDoctor().getId()
                 : null;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public Long getDoctorId() {
+        return doctorId;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     @Override
@@ -57,7 +77,7 @@ public class AppUserPrincipal implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return accountNonLocked;
     }
 
     @Override
@@ -67,6 +87,6 @@ public class AppUserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }

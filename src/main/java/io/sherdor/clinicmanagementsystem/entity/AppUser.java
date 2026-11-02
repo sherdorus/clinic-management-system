@@ -50,4 +50,12 @@ public class AppUser {
     protected void  onCreate(){
         createdAt = LocalDateTime.now();
     }
+
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean enabled = true;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean accountNonLocked = true;
 }
