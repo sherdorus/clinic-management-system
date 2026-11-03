@@ -55,3 +55,8 @@ management:
 logging:
   file:
     path: logs
+
+app:
+  bootstrap-admin:
+    email: ${BOOTSTRAP_ADMIN_EMAIL:}
+    password: ${BOOTSTRAP_ADMIN_PASSWORD:}
