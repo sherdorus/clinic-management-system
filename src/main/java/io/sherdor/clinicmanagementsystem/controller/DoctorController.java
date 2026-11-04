@@ -50,4 +50,9 @@ public class DoctorController {
     public ResponseEntity<List<DoctorDTO>> getDoctorsBySpecialty (@PathVariable Long specialtyId){
         return ResponseEntity.ok(doctorService.findBySpecialtyId(specialtyId));
     }
+
+    @GetMapping("/chief")
+    public ResponseEntity<DoctorDTO> getChiefDoctor() {
+        return ResponseEntity.ok(doctorService.findChiefDoctor());
+    }
 }

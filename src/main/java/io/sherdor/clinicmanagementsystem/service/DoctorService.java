@@ -1,7 +1,10 @@
 package io.sherdor.clinicmanagementsystem.service;
 
 import io.sherdor.clinicmanagementsystem.dto.DoctorDTO;
+import io.sherdor.clinicmanagementsystem.entity.AppUser;
+import io.sherdor.clinicmanagementsystem.enums.Role;
 import io.sherdor.clinicmanagementsystem.exception.ResourceNotFoundException;
+import io.sherdor.clinicmanagementsystem.repository.AppUserRepository;
 import io.sherdor.clinicmanagementsystem.repository.DoctorRepository;
 import io.sherdor.clinicmanagementsystem.repository.SpecialtyRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,7 @@ public class DoctorService {
 
     private final DoctorRepository doctorRepository;
     private final SpecialtyRepository specialtyRepository;
+    private final AppUserRepository appUserRepository;
 
     public List<DoctorDTO> findAll() {
 
@@ -72,5 +76,13 @@ public class DoctorService {
                 .stream()
                 .map(DoctorDTO::fromEntity)
                 .toList();
+    }
+
+    public DoctorDTO findChiefDoctor() {
+        var doctor = doctorRepository.findChiefDoctor()
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Chief doctor not found"));
+
+        return DoctorDTO.fromEntity(doctor);
     }
 }
